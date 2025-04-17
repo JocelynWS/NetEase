@@ -110,23 +110,3 @@ salary-api/
     ```
     (Lưu ý: Giá trị `net` là một ví dụ và sẽ phụ thuộc vào logic tính toán thuế của bạn).
 
-## Lưu ý quan trọng
-
-* Logic tính toán lương Net (`internal/control/calculateSalary.go`) hiện tại chỉ là một ví dụ đơn giản. **Bạn cần điều chỉnh logic này theo đúng quy định thuế và các khoản giảm trừ hiện hành của Việt Nam.**
-* Ứng dụng này cung cấp một giao diện người dùng cơ bản (`static/index.html`). Bạn có thể tùy chỉnh và cải thiện giao diện này theo nhu cầu.
-* Xử lý lỗi trong ứng dụng có thể được mở rộng để cung cấp thông tin chi tiết hơn cho người dùng.
-* Trong môi trường production, bạn nên xem xét các khía cạnh bảo mật, logging và cấu hình môi trường.
-
-## Phát triển thêm
-
-Bạn có thể mở rộng ứng dụng này bằng cách:
-
-* Thêm các tùy chọn cấu hình thuế khác nhau.
-* Hỗ trợ các định dạng file khác.
-* Cải thiện giao diện người dùng và trải nghiệm người dùng.
-* Thêm chức năng lưu trữ và quản lý dữ liệu lương.
-* Triển khai các unit test và integration test.
-
----
-
-**Enjoy using SALARY-API!**
