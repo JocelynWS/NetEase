@@ -5,25 +5,6 @@ This application provides a simple API to convert Gross salary to Net salary bas
 * **GET /:** Calculates Net salary from Gross salary and the number of dependents passed via query parameters.
 * **POST /upload:** Calculates Net salary for multiple individuals from an uploaded Excel file.
 
-## Directory Structure
-
-salary-api/
-├── static/             
-│   └── index.html
-├── cmd/               
-│   └── main.go
-├── internal/
-│   ├── control/        # Contains the business logic (salary calculation)
-│   │   └── calculateSalary.go
-│   ├── model/          # Contains data structure definitions (if any)
-│   │   └── salary.go
-│   └── routes/         # Contains the API endpoints definitions
-│       └── server.go
-├── go.mod
-├── go.sum
-└── README.md          
-
-
 ## Requirements
 
 * **Go:** Version 1.18 or higher (for `go.mod` support).
