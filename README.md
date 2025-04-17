@@ -1,112 +1,85 @@
-# SALARY-API: Ứng dụng tính lương Gross sang Net
+# SALARY-API: Gross to Net Salary Conversion Application
 
-Ứng dụng này cung cấp một API đơn giản để chuyển đổi lương Gross sang lương Net dựa trên số người phụ thuộc. Nó bao gồm hai endpoint chính:
+This application provides a simple API to convert Gross salary to Net salary based on the number of dependents. It includes two main endpoints:
 
-* **GET /calculate:** Tính lương Net từ lương Gross và số người phụ thuộc được truyền qua query parameters.
-* **POST /upload:** Tính lương Net cho nhiều người từ một file Excel hoặc CSV được tải lên.
+* **GET /:** Calculates Net salary from Gross salary and the number of dependents passed via query parameters.
+* **POST /upload:** Calculates Net salary for multiple individuals from an uploaded Excel file.
 
-## Cấu trúc thư mục
+## Directory Structure
 
 salary-api/
-├── static/             # Chứa file frontend (index.html)
+├── static/             
 │   └── index.html
-├── cmd/                # Chứa entry point của ứng dụng
+├── cmd/               
 │   └── main.go
 ├── internal/
-│   ├── control/        # Chứa logic nghiệp vụ (tính lương)
+│   ├── control/        # Contains the business logic (salary calculation)
 │   │   └── calculateSalary.go
-│   ├── model/          # Chứa định nghĩa struct dữ liệu (nếu có)
+│   ├── model/          # Contains data structure definitions (if any)
 │   │   └── salary.go
-│   └── routes/         # Chứa định nghĩa các API endpoints
+│   └── routes/         # Contains the API endpoints definitions
 │       └── server.go
 ├── go.mod
 ├── go.sum
-└── README.md          # File này
+└── README.md          
 
 
-## Yêu cầu
+## Requirements
 
-* **Go:** Phiên bản 1.18 trở lên (để hỗ trợ `go.mod`).
-* **Trình duyệt web:** Để tương tác với giao diện người dùng (nếu bạn đã thêm).
+* **Go:** Version 1.18 or higher (for `go.mod` support).
+* **Web Browser:** To interact with the user interface (if you have added one).
 
-## Hướng dẫn chạy
+## Running the Application
 
-1.  **Clone repository (nếu bạn có):**
+1.  **Clone the repository (if you have one):**
     ```bash
-    git clone <your_repository_url>
+    git clone [https://github.com/JocelynWS/NetEase](https://github.com/JocelynWS/NetEase)
     cd salary-api
     ```
 
-2.  **Tải các dependencies:**
+2.  **Download dependencies:**
     ```bash
     go mod tidy
     go mod download
     ```
 
-3.  **Chạy backend server:**
+3.  **Run the backend server:**
     ```bash
     go run cmd/main.go
     ```
-    Server sẽ khởi chạy và lắng nghe trên cổng `http://localhost:8081`.
+    The server will start and listen on port `http://localhost:8081`.
 
-4.  **Mở giao diện người dùng (frontend):**
-    Mở trình duyệt web của bạn và truy cập `http://localhost:8081/frontend`.
+4.  **Open the user interface (frontend):**
+    Open your web browser and navigate to `http://localhost:8081/frontend`.
 
-## Sử dụng API
+## API Usage
 
-### 1. Tính lương Net (API GET)
+### 1. Calculate Net Salary (GET API)
 
-* **Endpoint:** `/calculate`
-* **Phương thức:** `GET`
-* **Tham số (query parameters):**
-    * `gross`: Số lương Gross (bắt buộc).
-    * `dependents`: Số người phụ thuộc (bắt buộc, có thể là 0).
-* **Ví dụ:**
-    `http://localhost:8081/calculate?gross=15000000&dependents=1`
-* **Phản hồi (JSON):**
+* **Endpoint:** `/`
+* **Method:** `GET`
+* **Parameters (query parameters):**
+    * `gross`: The Gross salary amount (required).
+    * `dependents`: The number of dependents (required, can be 0).
+* **Example:**
+    `http://localhost:8081/?gross=70000000&dependents=0`
+* **Response (JSON):**
     ```json
     {
-        "gross_salary": 15000000,
-        "dependents": 1,
-        "net_salary": 13615000
+        "gross_salary": 70000000,
+        "dependents": 0,
+        "net_salary": 52987500
     }
     ```
-    (Lưu ý: Giá trị `net_salary` là một ví dụ và sẽ phụ thuộc vào logic tính toán thuế của bạn).
 
-### 2. Tính lương Net từ file (API POST)
+### 2. Calculate Net Salary from File (API POST)
 
 * **Endpoint:** `/upload`
-* **Phương thức:** `POST`
+* **Method:** `POST`
 * **Headers:** `Content-Type: multipart/form-data`
 * **Body (form-data):**
-    * `file`: Chọn file Excel (`.xlsx`) hoặc CSV (`.csv`) chứa dữ liệu lương. File dự kiến có các cột theo thứ tự: `Tên`, `Lương Gross`, `Số người phụ thuộc` (header có thể có hoặc không, code hiện tại bỏ qua header).
-* **Ví dụ (sử dụng `curl`):**
-    ```bash
-    curl -X POST -F "file=@path/to/your/salary_data.xlsx" http://localhost:8081/upload
-    ```
-    hoặc
-    ```bash
-    curl -X POST -F "file=@path/to/your/salary_data.csv" http://localhost:8081/upload
-    ```
-* **Phản hồi (JSON):**
-    ```json
-    {
-        "salaries": [
-            {
-                "name": "Nhân viên A",
-                "gross": 10000000,
-                "dependents": 0,
-                "net": 9250000
-            },
-            {
-                "name": "Nhân viên B",
-                "gross": 20000000,
-                "dependents": 2,
-                "net": 17470000
-            },
-            // ... các nhân viên khác
-        ]
-    }
-    ```
-    (Lưu ý: Giá trị `net` là một ví dụ và sẽ phụ thuộc vào logic tính toán thuế của bạn).
+    * `file`: Select an Excel (`.xlsx`) file containing salary data. The file is expected to have columns in the following order: `Name`, `Gross Salary`, `Number of Dependents` (the header row may be present or absent; the current code ignores the header).
+
+    
+
 
